@@ -10,6 +10,7 @@ public:
 	float speed, camera_dis;
 	void move(Vector dir);
 	Camera camera;
+	void rotate(Vector dir);
 	void update();
 };
 

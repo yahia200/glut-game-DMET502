@@ -10,5 +10,6 @@ public:
 	Entity(Vector pos, Vector hit);
 	void load_model(char *name);
 	void draw();
+	void rotate(Vector dir);
 };
 

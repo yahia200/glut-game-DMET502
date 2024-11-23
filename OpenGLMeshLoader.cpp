@@ -5,12 +5,13 @@
 #include "prefix_Player.h"
 #include "prefix_Camera.h"
 #include <glut.h>
+#include <windows.h>
 
 int WIDTH = 1280;
 int HEIGHT = 720;
 bool keys[256];
 int mouse_x = 0;
-int last_mouse_x = 0;
+int last_mouse_x = WIDTH/2;
 
 GLuint tex;
 char title[] = "3D Model Loader Sample";
@@ -266,11 +267,11 @@ void myMotion(int x, int y)
 
 	if (cameraZoom - y > 0)
 	{
-		p.camera.rotate(Vector(0, 0.1, 0));
+		p.rotate(Vector(0, 0.1, 0));
 	}
 	else
 	{
-		p.camera.rotate(Vector(0, -0.1, 0));
+		p.rotate(Vector(0, -0.1, 0));
 	}
 
 	cameraZoom = y;
@@ -347,11 +348,12 @@ void update(int value)
 {
 	checkKeys();
 
-	if (mouse_x != last_mouse_x)
-	{
 
-		p.camera.rotate(Vector(0, (last_mouse_x - mouse_x) * 0.007, 0));
-		last_mouse_x = mouse_x;
+	if ((mouse_x != last_mouse_x))
+	{
+		printf("Mouse: %d, last: %d\n", mouse_x, last_mouse_x);
+		p.rotate(Vector(0, (last_mouse_x - mouse_x) * 0.007, 0));
+		glutWarpPointer(WIDTH / 2, HEIGHT / 2);
 	}
 
 	p.update();
@@ -366,7 +368,7 @@ void main(int argc, char** argv)
 {
 	p.rotation = Vector(90, 0, 0);
 	p.hit_box = Vector(0, 0, 0);
-	p.camera.eye = Vector(0, 5, 20);
+	p.camera.eye = Vector(0, 5, -20);
 	p.camera.at = Vector(0, 0, 0);
 	p.camera.up = Vector(0, 1, 0);
 	glutInit(&argc, argv);
@@ -375,7 +377,17 @@ void main(int argc, char** argv)
 
 	glutInitWindowSize(WIDTH, HEIGHT);
 
-	glutInitWindowPosition(100, 150);
+	int screenWidth = GetSystemMetrics(SM_CXSCREEN);
+	int screenHeight = GetSystemMetrics(SM_CYSCREEN);
+
+	// Calculate centered position
+	int windowPosX = (screenWidth - WIDTH) / 2;
+	int windowPosY = (screenHeight - HEIGHT) / 2;
+
+	glutInitWindowPosition(windowPosX, windowPosY);
+
+	last_mouse_x = screenWidth/2;
+
 
 	glutCreateWindow(title);
 
@@ -388,6 +400,13 @@ void main(int argc, char** argv)
 	glutTimerFunc(16, update, 0);
 
 	glutPassiveMotionFunc(mouse);
+
+	glutWarpPointer(WIDTH / 2, HEIGHT / 2);
+
+	glutFullScreen();
+
+	glutSetCursor(GLUT_CURSOR_NONE);
+
 
 	//glutMouseFunc(myMouse);
 

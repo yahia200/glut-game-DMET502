@@ -27,3 +27,9 @@ void Player::update()
 	camera.at = position;
 		camera.setCamera();
 }
+
+void Player::rotate(Vector dir)
+{
+	rotation += dir * 57.3;
+	camera.rotate(dir);
+}
