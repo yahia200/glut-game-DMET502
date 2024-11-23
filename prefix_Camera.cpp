@@ -35,11 +35,27 @@ void Camera::zoom(int x, int y, int h)
 	gluLookAt(eye.x, eye.y, eye.z, at.x, at.y, at.z, up.x, up.y, up.z);	//Setup Camera with modified paramters
 }
 
-void Camera::setCamera()
+void Camera::setCamera(Vector pos)
 {
 	glLoadIdentity();	//Clear Model_View Matrix
+	
+	Vector new_eye = eye;
+	Vector new_at = at;
+	new_eye.y = eye.y + 7;
 
-	gluLookAt(eye.x, eye.y, eye.z, at.x, at.y, at.z, up.x, up.y, up.z);	//Setup Camera with modified paramters
+	if (prespective == FP)
+	{
+		Vector dir = !(eye - pos);
+		new_eye.x = pos.x;
+		new_eye.z = pos.z;
+		new_at = pos - dir;
+		new_at.y = new_eye.y;
+		
+	}
+
+
+
+	gluLookAt(new_eye.x, new_eye.y, new_eye.z, new_at.x, new_at.y, new_at.z, up.x, up.y, up.z);	//Setup Camera with modified paramters
 }
 
 void Camera::rotate(Vector v)
@@ -60,6 +76,5 @@ void Camera::rotate(Vector v)
 	direction.z *= lb / currentDistance;
 	eye = at + direction;
 
-	setCamera();
 
 }

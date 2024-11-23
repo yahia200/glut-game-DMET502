@@ -7,12 +7,14 @@
 #include <glut.h>
 #include <windows.h>
 
+#define DEBOUNCE 0.1
+
 int WIDTH = 1280;
 int HEIGHT = 720;
 bool keys[256];
 int mouse_x = 0;
 int last_mouse_x = WIDTH/2;
-
+float debounce_time = 0;
 GLuint tex;
 char title[] = "3D Model Loader Sample";
 
@@ -112,7 +114,6 @@ void myInit(void)
 
 	
 
-	p.camera.setCamera();
 	//*******************************************************************************************//
 	// EYE (ex, ey, ez): defines the location of the camera.									 //
 	// AT (ax, ay, az):	 denotes the direction where the camera is aiming at.					 //
@@ -232,22 +233,36 @@ void checkKeys()
 
 	if (keys['w'])
 	{
-		z = -1;
+		z = 1;
 	}
 
 	if (keys['s'])
 	{
-		z = 1;
+		z = -1;
 	}
 
 	if (keys['a'])
 	{
-		x = -1;
+		x = 1;
 	}
 
 	if (keys['d'])
 	{
-		x = 1;
+		x = -1;
+	}
+
+	if (keys[' '])
+	{
+		y = 1;
+	}
+	// debounced key press
+	if (keys['c'] && debounce_time > DEBOUNCE)
+	{
+		if (p.camera.prespective == TP)
+			p.camera.prespective = FP;
+		else
+			p.camera.prespective = TP;
+		debounce_time = 0;
 	}
 
 	if (x || y || z)
@@ -278,7 +293,6 @@ void myMotion(int x, int y)
 
 	glLoadIdentity();	//Clear Model_View Matrix
 
-	p.camera.setCamera();
 
 	GLfloat light_position[] = { 0.0f, 10.0f, 0.0f, 1.0f };
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
@@ -318,7 +332,6 @@ void myReshape(int w, int h)
 	// go back to modelview matrix so we can move the objects about
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	p.camera.setCamera();
 }
 
 //=======================================================================
@@ -358,6 +371,7 @@ void update(int value)
 
 	p.update();
 
+	debounce_time += 0.016;
 
 	glutPostRedisplay();
 	glutTimerFunc(16, update, 0);
@@ -368,7 +382,7 @@ void main(int argc, char** argv)
 {
 	p.rotation = Vector(90, 0, 0);
 	p.hit_box = Vector(0, 0, 0);
-	p.camera.eye = Vector(0, 5, -20);
+	p.camera.eye = Vector(0, 7, -20);
 	p.camera.at = Vector(0, 0, 0);
 	p.camera.up = Vector(0, 1, 0);
 	glutInit(&argc, argv);
