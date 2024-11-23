@@ -17,6 +17,7 @@ public:
 	Camera camera;
 	void rotate(Vector dir);
 	void update();
+	void jump();
 
 };
 

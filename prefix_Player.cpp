@@ -16,23 +16,22 @@ Player::Player(Vector pos, Vector hit)
 
 void Player::move(Vector dir)
 {
-	// Calculate the direction vector based on the player's rotation
-	float rad = rotation.y * (3.14 / 180.0); // Convert rotation to radians
-	Vector direction;
-	direction.x = dir.x * cos(rad) + dir.z * sin(rad);
-	direction.z = dir.z * cos(rad) - dir.x * sin(rad);
-	direction.y = 0;
+	
 
-	if (dir.y > 0 && !is_jumping)
+
+	position = position + dir * speed;
+	camera.eye = camera.eye + dir * speed;
+
+	//printf("position: %f %f %f\n", position.x, position.y, position.z);
+}
+
+void Player::jump()
+{
+	if (!is_jumping)
 	{
 		y_accel = jump_force;
 		is_jumping = true;
 	}
-
-	position = position + direction * speed;
-	camera.eye = camera.eye + direction * speed;
-
-	printf("position: %f %f %f\n", position.x, position.y, position.z);
 }
 
 void Player::update()

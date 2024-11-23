@@ -9,6 +9,11 @@
 
 #define DEBOUNCE 0.1
 
+enum {
+	tree = 0
+	
+};
+
 int WIDTH = 1280;
 int HEIGHT = 720;
 bool keys[256];
@@ -17,7 +22,9 @@ int last_mouse_x = WIDTH/2;
 float debounce_time = 0;
 GLuint tex;
 char title[] = "3D Model Loader Sample";
-
+Entity obstacles[1] = {
+Entity()
+};
 // 3D Projection Options
 GLdouble fovy = 45.0;
 GLdouble aspectRatio = (GLdouble)WIDTH / (GLdouble)HEIGHT;
@@ -32,7 +39,6 @@ int cameraZoom = 0;
 
 Player p;
 Model_3DS model_house;
-Model_3DS model_tree;
 
 // Textures
 GLTexture tex_ground;
@@ -40,6 +46,8 @@ GLTexture tex_ground;
 void keyboard(unsigned char key, int x, int y);
 void keyboardUp(unsigned char key, int x, int y);
 void checkKeys();
+void move(Vector v);
+bool is_colliding(Entity e1, Entity e2);
 
 
 //=======================================================================
@@ -178,12 +186,7 @@ void myDisplay(void)
 	// Draw Ground
 	RenderGround();
 
-	// Draw Tree Model
-	glPushMatrix();
-	glTranslatef(10, 1, 0);
-	glScalef(0.7, 0.7, 0.7);
-	model_tree.Draw();
-	glPopMatrix();
+	obstacles[tree].draw();
 
 	// Draw house Model
 	
@@ -253,7 +256,7 @@ void checkKeys()
 
 	if (keys[' '])
 	{
-		y = 1;
+		p.jump();
 	}
 	// debounced key press
 	if (keys['c'] && debounce_time > DEBOUNCE)
@@ -266,7 +269,7 @@ void checkKeys()
 	}
 
 	if (x || y || z)
-		p.move(Vector(x, y, z));
+		move(Vector(x, y, z));
 
 
 	glutPostRedisplay();
@@ -341,7 +344,7 @@ void LoadAssets()
 {
 	// Loading Model files
 	p.load_model("Models/house/house.3DS");
-	model_tree.Load("Models/tree/Tree1.3ds");
+	obstacles[tree].load_model("Models/tree/Tree1.3ds");
 
 	// Loading texture files
 	tex_ground.Load("Textures/ground.bmp");
@@ -364,7 +367,7 @@ void update(int value)
 
 	if ((mouse_x != last_mouse_x))
 	{
-		printf("Mouse: %d, last: %d\n", mouse_x, last_mouse_x);
+		//printf("Mouse: %d, last: %d\n", mouse_x, last_mouse_x);
 		p.rotate(Vector(0, (last_mouse_x - mouse_x) * 0.007, 0));
 		glutWarpPointer(WIDTH / 2, HEIGHT / 2);
 	}
@@ -378,13 +381,59 @@ void update(int value)
 
 
 }
+
+
+void move(Vector dir)
+{
+	// Calculate the direction vector based on the player's rotation
+	float rad = p.rotation.y * (3.14 / 180.0); // Convert rotation to radians
+	Vector direction;
+	direction.x = dir.x * cos(rad) + dir.z * sin(rad);
+	direction.z = dir.z * cos(rad) - dir.x * sin(rad);
+	direction.y = 0;
+
+	for (Entity e : obstacles)
+	{
+		Vector diff = e.position - p.position;
+		if ((!(direction) ^ !(diff)) > 0.0f) {
+		printf("%d\n", (!(direction) ^ !(diff)) > 0.0f);
+			if (is_colliding(p, e))
+			{
+				return;
+			}
+		}
+	}
+
+	p.move(direction);
+}
+
+bool is_colliding(Entity e1, Entity e2)
+{
+	printf("ss");
+	Vector e1_min = e1.position - e1.hit_box;
+	Vector e1_max = e1.position + e1.hit_box;
+
+	Vector e2_min = e2.position - e2.hit_box;
+	Vector e2_max = e2.position + e2.hit_box;
+
+	if (e1_min.x < e2_max.x && e1_max.x > e2_min.x &&
+		e1_min.y < e2_max.y && e1_max.y > e2_min.y &&
+		e1_min.z < e2_max.z && e1_max.z > e2_min.z)
+	{
+		return true;
+	}
+	return false;
+}
+
 void main(int argc, char** argv)
 {
 	p.rotation = Vector(90, 0, 0);
-	p.hit_box = Vector(0, 0, 0);
+	p.hit_box = Vector(3, 1, 1);
 	p.camera.eye = Vector(0, 7, -20);
 	p.camera.at = Vector(0, 0, 0);
 	p.camera.up = Vector(0, 1, 0);
+	obstacles[tree].position = Vector(10, 1, 0);
+	obstacles[tree].hit_box = Vector(1, 1, 1);
 	glutInit(&argc, argv);
 
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
