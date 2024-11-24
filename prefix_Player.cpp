@@ -2,7 +2,7 @@
 
 Player::Player()
 {
-	speed = 0.1;
+	
 	camera.at = Vector(0, 0, 0);
 }
 
@@ -11,7 +11,6 @@ Player::Player(Vector pos, Vector hit)
 	position = pos;
 	camera.at = pos;
 	hit_box = hit;
-	speed = 0.1;
 }
 
 void Player::move(Vector dir)

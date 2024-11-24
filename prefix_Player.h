@@ -10,7 +10,7 @@ class Player : public Entity
 public:
 	Player();
 	Player(Vector pos, Vector hit);
-	float speed;
+	float speed = 0.2;
 	float jump_force = 1.3, y_accel = g;
 	bool is_jumping;
 	void move(Vector dir);

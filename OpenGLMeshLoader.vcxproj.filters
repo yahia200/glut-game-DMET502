@@ -28,6 +28,7 @@
     <ClCompile Include="prefix_Vector.cpp" />
     <ClCompile Include="prefix_Player.cpp" />
     <ClCompile Include="prefix_Camera.cpp" />
+    <ClCompile Include="prefix_L1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLTexture.h">
@@ -40,5 +41,6 @@
     <ClInclude Include="prefix_Vector.h" />
     <ClInclude Include="prefix_Player.h" />
     <ClInclude Include="prefix_Camera.h" />
+    <ClInclude Include="prefix_L1.h" />
   </ItemGroup>
 </Project>
