@@ -1,9 +1,9 @@
-#include "prefix_L1.h"
+#include "prefix_L2.h"
 //
 ////=======================================================================
 //// Lighting Configuration Function
 ////=======================================================================
-void L1::InitLightSource()
+void L2::InitLightSource()
 {
 	// Enable Lighting for this OpenGL Program
 	glEnable(GL_LIGHTING);
@@ -32,7 +32,7 @@ void L1::InitLightSource()
 ////=======================================================================
 //// Material Configuration Function
 ////======================================================================
-void L1::InitMaterial()
+void L2::InitMaterial()
 {
 	// Enable Material Tracking
 	glEnable(GL_COLOR_MATERIAL);
@@ -53,7 +53,7 @@ void L1::InitMaterial()
 ////=======================================================================
 //// OpengGL Configuration Function
 ////=======================================================================
-void L1::myInit(float fovy, float aspectRatio, float zNear, float zFar)
+void L2::myInit(float fovy, float aspectRatio, float zNear, float zFar)
 {
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 
@@ -88,7 +88,7 @@ void L1::myInit(float fovy, float aspectRatio, float zNear, float zFar)
 }
 
 
-void L1::RenderGround()
+void L2::RenderGround()
 {
 	glDisable(GL_LIGHTING);	// Disable lighting 
 
@@ -118,7 +118,7 @@ void L1::RenderGround()
 }
 
 
-void L1::Display(Player *p)
+void L2::Display(Player* p)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -149,28 +149,26 @@ void L1::Display(Player *p)
 }
 
 
-L1::L1()
+L2::L2()
 {
 	tex_ground.Load("Textures/ground.bmp");
 
 
-	obstacles[tree] = Entity(Vector(10, 1, 0), Vector(1, 1, 1));
+	obstacles[tree] = Entity(Vector(-10, 1, 0), Vector(1, 1, 1));
 	obstacles[tree].load_model("Models/tree/Tree1.3ds");
-
-	
 
 	collectables[0] = Collectable(Vector(0, 1, 20), Vector(1, 1, 1), egg);
 	collectables[0].load_model("Models/tree/Tree1.3ds");
 }
 
-void L1::collect(int c, Player *p)
+void L2::collect(int c, Player* p)
 {
 	collectables[c].collected = true;
 	printf("type: %d\n", collectables[c].type);
 	p->collectables[collectables[c].type]++;
 }
 
-L1::~L1()
+L2::~L2()
 {
 }
 

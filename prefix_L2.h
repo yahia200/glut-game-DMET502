@@ -7,29 +7,30 @@
 #include <glut.h>
 
 
-class L1
+class L2
 {
-enum { // asami el obstacles
-	tree = 0, // awel wa7ed bas el me7tag '='
+	enum { // asami el obstacles
+		tree = 0, // awel wa7ed bas el me7tag '='
 
 
 
 
-	num_obstacles // lazem ykoon a5er 7aga fe el enum
-};
+		num_obstacles // lazem ykoon a5er 7aga fe el enum
+	};
+
 public:
 	void InitLightSource();
 	void InitMaterial();
 	void myInit(float fovy, float aspectRatio, float zNear, float zFar);
-	void Display(Player *p);
+	void Display(Player* p);
 	Entity obstacles[num_obstacles];
 	const static int num_collectables = 1;
 	Collectable collectables[num_collectables];
 	void RenderGround();
 	GLTexture tex_ground;
-	L1();
-	void collect(int c, Player *p);
-	~L1();
+	L2();
+	void collect(int c, Player* p);
+	~L2();
 
 };
 

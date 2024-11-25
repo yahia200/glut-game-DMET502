@@ -13,6 +13,7 @@ public:
 	float speed = 0.2;
 	float jump_force = 1.3, y_accel = g;
 	bool is_jumping;
+	int collectables[collectable_types_count];
 	void move(Vector dir);
 	Camera camera;
 	void rotate(Vector dir);
@@ -20,4 +21,5 @@ public:
 	void jump();
 
 };
+
 

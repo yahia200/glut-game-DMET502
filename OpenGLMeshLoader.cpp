@@ -4,12 +4,18 @@
 #include "prefix_Entity.h"
 #include "prefix_Player.h"
 #include "prefix_Camera.h"
+#include "prefix_Physics.h"
 #include "prefix_L1.h"
+#include "prefix_L2.h"
 #include <glut.h>
 #include <windows.h>
 
-#define DEBOUNCE 0.1
+constexpr auto DEBOUNCE = 0.1;
 
+typedef enum {
+	LVL1 = 0,
+	LVL2,
+} State;
 
 int WIDTH = 1280;
 int HEIGHT = 720;
@@ -17,36 +23,46 @@ bool keys[256];
 int mouse_x = 0;
 int last_mouse_x = WIDTH/2;
 float debounce_time = 0;
-GLuint tex;
+int cameraZoom = 0;
 char title[] = "3D Model Loader Sample";
-// 3D Projection Options
+GLuint tex;
 GLdouble fovy = 45.0;
 GLdouble aspectRatio = (GLdouble)WIDTH / (GLdouble)HEIGHT;
 GLdouble zNear = 0.1;
 GLdouble zFar = 100;
+State state = LVL1;
 
 
 
-
-int cameraZoom = 0;
 Player p;
 L1 l1;
+L2 l2;
+Physics physics;
+
 
 
 void keyboard(unsigned char key, int x, int y);
 void keyboardUp(unsigned char key, int x, int y);
 void checkKeys();
 void move(Vector v);
-bool is_colliding(Entity e1, Entity e2);
+void LoadAssets();
+void mouse(int x, int y);
+void update(int value);
+void myReshape(int w, int h);
+void myDisplay(void);
+void myMotion(int x, int y);
 
 
-//=======================================================================
-// Display Function
-//=======================================================================
 void myDisplay(void)
 {
-	
-	l1.Display(p);
+	if (state == LVL1)
+	{
+		l1.Display(&p);
+	}
+	else if (state == LVL2)
+	{
+		l2.Display(&p);
+	}
 
 
 	//sky box
@@ -70,18 +86,18 @@ void myDisplay(void)
 	glutSwapBuffers();
 }
 
-//=======================================================================
-// Keyboard Function
-//=======================================================================
+
 void keyboard(unsigned char key, int x, int y)
 {
 	keys[key] = true;
 }
 
+
 void keyboardUp(unsigned char key, int x, int y)
 {
 	keys[key] = false;
 }
+
 
 void checkKeys()
 {
@@ -123,6 +139,16 @@ void checkKeys()
 		debounce_time = 0;
 	}
 
+	if (keys['1'])
+	{
+		state = LVL1;
+	}
+
+	if (keys['2'])
+	{
+		state = LVL2;
+	}
+
 	if (x || y || z)
 		move(Vector(x, y, z));
 
@@ -131,9 +157,6 @@ void checkKeys()
 }
 
 
-//=======================================================================
-// Motion Function
-//=======================================================================
 void myMotion(int x, int y)
 {
 	y = HEIGHT - y;
@@ -158,18 +181,14 @@ void myMotion(int x, int y)
 	glutPostRedisplay();	//Re-draw scene 
 }
 
-//=======================================================================
-// Mouse Function
-//=======================================================================
+
 void myMouse(int button, int state, int x, int y)
 {
 	y = HEIGHT - y;
 	
 }
 
-//=======================================================================
-// Reshape Function
-//=======================================================================
+
 void myReshape(int w, int h)
 {
 	if (h == 0) {
@@ -192,23 +211,19 @@ void myReshape(int w, int h)
 	glLoadIdentity();
 }
 
-//=======================================================================
-// Assets Loading Function
-//=======================================================================
+
 void LoadAssets()
 {
 	p.load_model("Models/house/house.3DS");
 	loadBMP(&tex, "Textures/blu-sky-3.bmp", true);
 }
 
-//=======================================================================
-// Main Function
-//=======================================================================
 
 void mouse(int x, int y)
 {
 	mouse_x = x;
 }
+
 
 void update(int value)
 {
@@ -242,37 +257,53 @@ void move(Vector dir)
 	direction.z = dir.z * cos(rad) - dir.x * sin(rad);
 	direction.y = 0;
 
+	if (state == LVL1)
+	{
 	for (Entity e : l1.obstacles)
 	{
 		Vector diff = e.position - p.position;
 		if ((!(direction) ^ !(diff)) > 0.0f) {
-		printf("%d\n", (!(direction) ^ !(diff)) > 0.0f);
-			if (is_colliding(p, e))
+			if (physics.is_colliding(p, e))
 			{
 				return;
 			}
 		}
 	}
 
+	for (int c = 0; c < l1.num_collectables; c++)
+	{
+
+		if (!l1.collectables[c].collected && physics.is_colliding(p, l1.collectables[c]))
+		{
+			l1.collect(c, &p);
+		}
+	}
+
+}
+	if (state == LVL2) {
+		for (Entity e : l2.obstacles)
+		{
+			Vector diff = e.position - p.position;
+			if ((!(direction) ^ !(diff)) > 0.0f) {
+				if (physics.is_colliding(p, e))
+				{
+					return;
+				}
+			}
+		}
+
+		for (int c = 0; c < l2.num_collectables; c++)
+		{
+
+			if (!l2.collectables[c].collected && physics.is_colliding(p, l2.collectables[c]))
+			{
+				l2.collect(c, &p);
+			}
+		}
+	}
 	p.move(direction);
 }
 
-bool is_colliding(Entity e1, Entity e2)
-{
-	Vector e1_min = e1.position - e1.hit_box;
-	Vector e1_max = e1.position + e1.hit_box;
-
-	Vector e2_min = e2.position - e2.hit_box;
-	Vector e2_max = e2.position + e2.hit_box;
-
-	if (e1_min.x < e2_max.x && e1_max.x > e2_min.x &&
-		e1_min.y < e2_max.y && e1_max.y > e2_min.y &&
-		e1_min.z < e2_max.z && e1_max.z > e2_min.z)
-	{
-		return true;
-	}
-	return false;
-}
 
 void main(int argc, char** argv)
 {
@@ -326,6 +357,8 @@ void main(int argc, char** argv)
 	LoadAssets();
 	l1 = L1();
 	l1.myInit(fovy, aspectRatio, zNear, zFar);
+	l2 = L2();
+	l2.myInit(fovy, aspectRatio, zNear, zFar);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_LIGHTING);
 	glEnable(GL_LIGHT0);

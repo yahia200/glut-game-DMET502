@@ -87,8 +87,11 @@
     <ClCompile Include="Model_3DS.cpp" />
     <ClCompile Include="OpenGLMeshLoader.cpp" />
     <ClCompile Include="prefix_Camera.cpp" />
+    <ClCompile Include="prefix_Collectable.cpp" />
     <ClCompile Include="prefix_Entity.cpp" />
     <ClCompile Include="prefix_L1.cpp" />
+    <ClCompile Include="prefix_L2.cpp" />
+    <ClCompile Include="prefix_Physics.cpp" />
     <ClCompile Include="prefix_Player.cpp" />
     <ClCompile Include="prefix_Vector.cpp" />
   </ItemGroup>
@@ -96,8 +99,11 @@
     <ClInclude Include="GLTexture.h" />
     <ClInclude Include="Model_3DS.h" />
     <ClInclude Include="prefix_Camera.h" />
+    <ClInclude Include="prefix_Collectable.h" />
     <ClInclude Include="prefix_Entity.h" />
     <ClInclude Include="prefix_L1.h" />
+    <ClInclude Include="prefix_L2.h" />
+    <ClInclude Include="prefix_Physics.h" />
     <ClInclude Include="prefix_Player.h" />
     <ClInclude Include="prefix_Vector.h" />
   </ItemGroup>

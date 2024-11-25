@@ -1,6 +1,15 @@
 #pragma once
 #include "prefix_Vector.h"
 #include "Model_3DS.h"
+
+typedef enum CollectableType
+{
+	egg = 0,
+
+	collectable_types_count
+} CollectableType;
+
+
 class Entity
 {
 public:

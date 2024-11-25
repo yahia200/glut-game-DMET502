@@ -29,6 +29,9 @@
     <ClCompile Include="prefix_Player.cpp" />
     <ClCompile Include="prefix_Camera.cpp" />
     <ClCompile Include="prefix_L1.cpp" />
+    <ClCompile Include="prefix_Collectable.cpp" />
+    <ClCompile Include="prefix_Physics.cpp" />
+    <ClCompile Include="prefix_L2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GLTexture.h">
@@ -42,5 +45,8 @@
     <ClInclude Include="prefix_Player.h" />
     <ClInclude Include="prefix_Camera.h" />
     <ClInclude Include="prefix_L1.h" />
+    <ClInclude Include="prefix_Collectable.h" />
+    <ClInclude Include="prefix_Physics.h" />
+    <ClInclude Include="prefix_L2.h" />
   </ItemGroup>
 </Project>

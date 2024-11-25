@@ -52,6 +52,11 @@ void Player::update()
 	camera.eye.y = position.y;
 	camera.at = position;
 	camera.setCamera(position);
+
+	for (int cc : collectables)
+	{
+		printf("%d\n", cc);
+	}
 }
 
 void Player::rotate(Vector dir)
