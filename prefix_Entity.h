@@ -13,7 +13,7 @@ typedef enum CollectableType
 class Entity
 {
 public:
-	Vector position, hit_box, rotation;
+	Vector position, hit_box, rotation, scale = Vector(1,1,1);
 	Model_3DS model;
 	Entity();
 	Entity(Vector pos, Vector hit);

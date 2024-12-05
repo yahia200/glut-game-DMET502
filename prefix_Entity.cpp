@@ -19,6 +19,7 @@ void Entity::draw()
 {
 	glPushMatrix();
 	glTranslatef(position.x, position.y+hit_box.y/2, position.z);
+	glScaled(scale.x, scale.y, scale.z);
 	glRotated(rotation.y, 0, 1, 0);
 	glRotated(rotation.x, 1, 0, 0);
 	glRotated(rotation.z, 0, 0, 1);

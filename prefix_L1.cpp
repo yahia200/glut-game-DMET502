@@ -154,13 +154,14 @@ L1::L1()
 	tex_ground.Load("Textures/ground.bmp");
 
 
-	obstacles[tree] = Entity(Vector(10, 1, 0), Vector(1, 1, 1));
+	obstacles[tree] = Entity(Vector(10, -1, 0), Vector(1, 1, 1));
 	obstacles[tree].load_model("Models/tree/Tree1.3ds");
-
+	obstacles[tree].scale *= 0.8;
 	
 
-	collectables[0] = Collectable(Vector(0, 1, 20), Vector(1, 1, 1), egg);
-	collectables[0].load_model("Models/tree/Tree1.3ds");
+	collectables[0] = Collectable(Vector(0, 2.2, 20), Vector(1, 1, 1), egg);
+	collectables[0].load_model("Models/Dresser/Dresser.3ds");
+	collectables[0].scale *= 0.008;
 }
 
 void L1::collect(int c, Player *p)
