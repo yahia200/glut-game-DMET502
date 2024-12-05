@@ -214,7 +214,9 @@ void myReshape(int w, int h)
 
 void LoadAssets()
 {
-	p.load_model("Models/house/house.3DS");
+	p.load_model("Models/player/player.3DS");
+	p.scale *= 5;
+	p.rotate({0,5,0});
 	loadBMP(&tex, "Textures/blu-sky-3.bmp", true);
 }
 

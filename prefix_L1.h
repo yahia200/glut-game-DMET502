@@ -11,7 +11,7 @@ class L1
 {
 enum { // asami el obstacles
 	tree = 0, // awel wa7ed bas el me7tag '='
-
+	tree2,
 
 
 

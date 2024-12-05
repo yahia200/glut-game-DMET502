@@ -1,3 +1,9 @@
-﻿  prefix_L1.cpp
+﻿  OpenGLMeshLoader.cpp
+C:\Users\amrah\Desktop\ACL\glut-game-DMET502\TextureBuilder.h(27,52): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+  (compiling source file 'OpenGLMeshLoader.cpp')
+  
+C:\Users\amrah\Desktop\ACL\glut-game-DMET502\TextureBuilder.h(28,52): warning C4244: 'argument': conversion from 'int' to 'GLfloat', possible loss of data
+  (compiling source file 'OpenGLMeshLoader.cpp')
+  
 GLTexture.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/INCREMENTAL:NO' specification
-  OpenGLMeshLoader.vcxproj -> C:\glut-game-DMET502\Debug\OpenGLMeshLoader19.exe
+  OpenGLMeshLoader.vcxproj -> C:\Users\amrah\Desktop\ACL\glut-game-DMET502\Debug\OpenGLMeshLoader19.exe
