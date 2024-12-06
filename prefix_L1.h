@@ -27,6 +27,7 @@ enum { // asami el obstacles
 };
 public:
 	void InitLightSource();
+	float intensity = 1;
 	void InitMaterial();
 	void myInit(float fovy, float aspectRatio, float zNear, float zFar);
 	void Display(Player *p);
