@@ -118,54 +118,7 @@ void L1::RenderGround()
 }
 
 // Method to draw a textured wall
-void L1::DrawWall(GLTexture& texture, float width, float height)
-{
-	glEnable(GL_TEXTURE_2D);  // Enable 2D Texturing
-	glBindTexture(GL_TEXTURE_2D, tex_wall.texture[0]);  // Bind the texture
 
-	glBegin(GL_QUADS);  // Draw a rectangle
-
-	// Define the 4 corners of the wall and their texture coordinates
-	glTexCoord2f(0.0f, 0.0f); glVertex3f(-width / 2, 0, -height / 2);
-	glTexCoord2f(1.0f, 0.0f); glVertex3f(width / 2, 0, -height / 2);
-	glTexCoord2f(1.0f, 1.0f); glVertex3f(width / 2, 0, height / 2);
-	glTexCoord2f(0.0f, 1.0f); glVertex3f(-width / 2, 0, height / 2);
-
-	glEnd();
-
-	glDisable(GL_TEXTURE_2D);  // Disable 2D Texturing after drawing the wall
-}
-void L1::DrawWalls()
-{
-	// Load the texture for the walls
-	tex_wall.Load("Textures/wall.bmp");
-
-	// Back Wall (Parallel to Z-axis, rotated 180 degrees)
-	glPushMatrix();
-	glTranslatef(80, 5, -10);  // Move the wall to the correct position
-	DrawWall(tex_wall, 20, 10);  // Draw the back wall (Width: 20, Height: 10)
-	glPopMatrix();
-
-	// Left Wall (Rotated 90 degrees around Y-axis)
-	glPushMatrix();
-	glTranslatef(70, 5, 0);  // Position left wall
-	glRotatef(90, 0, 1, 0);  // Rotate the left wall
-	DrawWall(tex_wall, 10, 10);  // Draw left wall (Width: 10, Height: 10)
-	glPopMatrix();
-
-	// Right Wall (Rotated -90 degrees around Y-axis)
-	glPushMatrix();
-	glTranslatef(90, 5, 0);  // Position right wall
-	glRotatef(-90, 0, 1, 0);  // Rotate the right wall
-	DrawWall(tex_wall, 10, 10);  // Draw right wall (Width: 10, Height: 10)
-	glPopMatrix();
-
-	// Front Wall (Parallel to Z-axis)
-	glPushMatrix();
-	glTranslatef(80, 5, 10);  // Position front wall
-	DrawWall(tex_wall, 20, 10);  // Draw the front wall (Width: 20, Height: 10)
-	glPopMatrix();
-}
 
 void L1::Display(Player* p)
 {
@@ -179,8 +132,7 @@ void L1::Display(Player* p)
 	// Draw Ground
 	RenderGround();
 
-	// Draw the 4 walls
-	DrawWalls();
+	
 
 	for (Entity e : obstacles)
 	{
@@ -201,7 +153,6 @@ void L1::Display(Player* p)
 L1::L1()
 {
 	tex_ground.Load("Textures/ground.bmp");
-	tex_wall.Load("Textures/wall.bmp");
 
 
 	obstacles[tree] = Entity(Vector(10, 0, 0), Vector(1, 1, 1));

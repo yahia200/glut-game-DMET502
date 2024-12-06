@@ -18,10 +18,7 @@ enum { // asami el obstacles
 	tree3,
 	tree4,
 	tree5,
-	wall1,  // Back wall
-	wall2,  // Left wall
-	wall3,  // Right wall
-	wall4,  // Front wall
+
 
 	num_obstacles // lazem ykoon a5er 7aga fe el enum
 };
@@ -35,10 +32,8 @@ public:
 	const static int num_collectables = 4;
 	Collectable collectables[num_collectables];
 	void RenderGround();
-	void DrawWall(GLTexture& texture, float width, float height);
-	void DrawWalls();
+
 	GLTexture tex_ground;
-	GLTexture tex_wall;
 	L1();
 	void collect(int c, Player *p);
 	void CheckAllCollected();
