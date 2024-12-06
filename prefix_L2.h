@@ -15,6 +15,7 @@ class L2
 		wall2,  // Left wall
 		wall3,  // Right wall
 		wall4,  // Front wall
+		wall5,
 		door,
 		chair,
 		dresser,

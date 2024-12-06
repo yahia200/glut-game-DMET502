@@ -235,6 +235,7 @@ void update(int value)
 		l1.intensity = 0;
 	// Detect collision with the house in Level 1
 	if (state == LVL1 && physics.is_colliding(p, l1.obstacles[2]) && l1.allCollected) {
+		p.move(Vector(-p.position.x/p.speed, 0, -p.position.z/p.speed));
 		state = LVL2;
 	}
 
