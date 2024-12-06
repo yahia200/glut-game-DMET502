@@ -48,7 +48,7 @@ void Player::update()
 			is_jumping = false;
 		position.y = 0;
 	}
-
+	
 	camera.eye.y = position.y;
 	camera.at = position;
 	camera.setCamera(position);

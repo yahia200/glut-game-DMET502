@@ -19,6 +19,7 @@ public:
 	Entity();
 	Entity(Vector pos, Vector hit);
 	void load_model(char *name);
+	void draw(float time, char p);
 	void draw();
 	void rotate(Vector dir);
 };
