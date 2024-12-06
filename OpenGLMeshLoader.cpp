@@ -231,6 +231,8 @@ void update(int value)
 {
 	checkKeys();
 	l1.intensity -= 0.1 * 0.016;
+	if (l1.intensity < 0)
+		l1.intensity = 0;
 	// Detect collision with the house in Level 1
 	if (state == LVL1 && physics.is_colliding(p, l1.obstacles[2]) && l1.allCollected) {
 		state = LVL2;
