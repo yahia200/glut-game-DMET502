@@ -149,7 +149,7 @@ void L2::Display(Player* p)
 			c.draw();
 	}
 
-	// Draw house Model
+	 //Draw house Model
 
 	p->draw();
 }

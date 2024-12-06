@@ -38,6 +38,8 @@ public:
 	void collect(int c, Player *p);
 	void CheckAllCollected();
 	bool allCollected = false; // Flag to indicate all collectables are collected
+	char objects = 'o';
+	char boy = 'p';
 	~L1();
 
 };

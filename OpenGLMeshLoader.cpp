@@ -7,6 +7,7 @@
 #include "prefix_Physics.h"
 #include "prefix_L1.h"
 #include "prefix_L2.h"
+#include <ctime>
 #include <glut.h>
 #include <windows.h>
 
@@ -17,6 +18,8 @@ typedef enum {
 	LVL2,
 } State;
 
+
+float elapsedTime = 0;
 int WIDTH = 1280;
 int HEIGHT = 720;
 bool keys[256];
@@ -53,6 +56,33 @@ void myReshape(int w, int h);
 void myDisplay(void);
 void myMotion(int x, int y);
 
+// Function to display the timer
+void displayTimer(float time) {
+	std::string timeStr = "Time: " + std::to_string(static_cast<int>(time)) + "s";
+	glColor3f(1.0f, 1.0f, 1.0f); // Set text color to white
+
+	// Set up an orthographic projection for 2D rendering
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(0, WIDTH, 0, HEIGHT);
+	glMatrixMode(GL_MODELVIEW);
+	glPushMatrix();
+	glLoadIdentity();
+
+	// Position the text in the top right corner
+	glRasterPos2f(WIDTH - 100, HEIGHT - 30);
+
+	for (char c : timeStr) {
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, c);
+	}
+
+	// Restore the previous projection and modelview matrices
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glPopMatrix();
+}
 
 void myDisplay(void)
 {
@@ -65,6 +95,8 @@ void myDisplay(void)
 		l2.Display(&p);
 	}
 
+	// Display the timer
+	displayTimer(elapsedTime);
 
 	//sky box
 	glPushMatrix();
@@ -247,9 +279,16 @@ void update(int value)
 		glutWarpPointer(WIDTH / 2, HEIGHT / 2);
 	}
 
+	if (p.playerCollided) {
+		p.move(Vector(-50, 0, 0));
+		p.playerCollided = false;
+	}
+
 	p.update();
 
 	debounce_time += 0.016;
+	elapsedTime += 0.016; // Update the elapsed time
+
 
 	glutPostRedisplay();
 	glutTimerFunc(16, update, 0);
@@ -275,6 +314,7 @@ void move(Vector dir)
 		if ((!(direction) ^ !(diff)) > 0.0f) {
 			if (physics.is_colliding(p, e))
 			{
+				p.playerCollided = true; // to use it for translating back the player when colliding
 				return;
 			}
 		}
@@ -286,6 +326,9 @@ void move(Vector dir)
 		if (!l1.collectables[c].collected && physics.is_colliding(p, l1.collectables[c]))
 		{
 			l1.collect(c, &p);
+			p.collectedSoFar++;  // to use it for sccaling the player when he collects the items
+				p.scale *= (1.1);
+			
 		}
 	}
 

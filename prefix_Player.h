@@ -13,6 +13,8 @@ public:
 	float speed = 0.6;
 	float jump_force = 1.3, y_accel = g;
 	bool is_jumping;
+	bool playerCollided; // for obstacle collision animation
+	int collectedSoFar = 0; // collected items till now
 	int collectables[collectable_types_count];
 	void move(Vector dir);
 	Camera camera;
