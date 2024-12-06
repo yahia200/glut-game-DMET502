@@ -154,14 +154,50 @@ L1::L1()
 	tex_ground.Load("Textures/ground.bmp");
 
 
-	obstacles[tree] = Entity(Vector(10, 1, 0), Vector(1, 1, 1));
+	obstacles[tree] = Entity(Vector(10, 0, 0), Vector(1, 1, 1));
 	obstacles[tree].load_model("Models/tree/Tree1.3ds");
+
+	obstacles[tree1] = Entity(Vector(66, 0, 22), Vector(1, 1, 1));
+	obstacles[tree1].load_model("Models/tree/Tree1.3ds");
+	
+	obstacles[tree2] = Entity(Vector(45, 0, 10), Vector(1, 1, 1));
+	obstacles[tree2].load_model("Models/tree/Tree1.3ds");
+	
+	obstacles[tree3] = Entity(Vector(-46, 0, -10), Vector(1, 1, 1));
+	obstacles[tree3].load_model("Models/tree/Tree1.3ds");
+	
+	obstacles[tree4] = Entity(Vector(-22, 0, -22), Vector(1, 1, 1));
+	obstacles[tree4].load_model("Models/tree/Tree1.3ds");
+	
+	obstacles[tree5] = Entity(Vector(78, 0, 22), Vector(1, 1, 1));
+	obstacles[tree5].load_model("Models/tree/Tree1.3ds");
+	
+	obstacles[house] = Entity(Vector(80, 0, 0), Vector(1, 1, 1));
+	obstacles[house].load_model("Models/house/house.3ds");
+	obstacles[house].rotate({ 90,0,90 });
+	obstacles[house].scale *= 2; 
+
+	obstacles[outdoortable] = Entity(Vector(38, 0, 20), Vector(3, 2, 1.5));
+	obstacles[outdoortable].load_model("Models/outdoorfurn/Outdoor Furniture_02_3ds.3ds");
+	obstacles[outdoortable].scale *= 0.08;
 
 	
 
-	collectables[0] = Collectable(Vector(0, 2, 20), Vector(1, 1, 1), egg);
-	collectables[0].load_model("Models/Armchair 3/Armchair 3.3ds");
-	collectables[0].scale *= 0.0056;
+	collectables[0] = Collectable(Vector(50, -0.1, 20), Vector(1, 1, 1), egg);
+	collectables[0].load_model("Models/egg/egg.3ds");
+	collectables[0].scale *= 0.1;
+
+	collectables[1] = Collectable(Vector(90, -0.1, 20), Vector(1, 1, 1), apple);
+	collectables[1].load_model("Models/apple/apple.3ds");
+	collectables[1].scale *= 0.6;
+
+	collectables[2] = Collectable(Vector(-10, 0.1, 20), Vector(1, 1, 1), apple);
+	collectables[2].load_model("Models/apple/apple.3ds");
+	collectables[2].scale *= 0.6;
+
+	collectables[3] = Collectable(Vector(-22, 0.1, 20), Vector(1, 1, 1), egg);
+	collectables[3].load_model("Models/egg/egg.3ds");
+	collectables[3].scale *= 0.1;
 }
 
 void L1::collect(int c, Player *p)

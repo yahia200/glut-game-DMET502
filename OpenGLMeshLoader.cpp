@@ -216,7 +216,6 @@ void LoadAssets()
 {
 	p.load_model("Models/player/player.3DS");
 	p.scale *= 5;
-	p.rotate({0,5,0});
 	loadBMP(&tex, "Textures/blu-sky-3.bmp", true);
 }
 
@@ -309,7 +308,8 @@ void move(Vector dir)
 
 void main(int argc, char** argv)
 {
-	p.rotation = Vector(90, 0, 0);
+	p.rotation = Vector(0, 0, 0);
+	p.scale *= 0.4;
 	p.hit_box = Vector(3, 1, 1);
 	p.camera.eye = Vector(0, 7, -20);
 	p.camera.at = Vector(0, 0, 0);

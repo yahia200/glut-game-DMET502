@@ -5,6 +5,7 @@
 typedef enum CollectableType
 {
 	egg = 0,
+	apple,
 
 	collectable_types_count
 } CollectableType;
