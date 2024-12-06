@@ -161,25 +161,43 @@ L2::L2()
 
 
 	obstacles[wall1] = Entity(Vector(55, 0, 0), Vector(1, 1, 1));
-	obstacles[chair] = Entity(Vector(35, 0, -25), Vector(0.5, 0.5, 0.5));
+	obstacles[chair] = Entity(Vector(-5, 0, -5), Vector(0.5, 0.5, 0.5));
 	obstacles[chair].load_model("Models/chair/chair.3ds");
 	obstacles[chair].scale *= 0.03;
 
-	obstacles[dresser] = Entity(Vector(35, 0.5, 25), Vector(0.5, 0.5, 0.5));
+	obstacles[chair2] = Entity(Vector(12, 0, 9), Vector(0.5, 0.5, 0.5));
+	obstacles[chair2].load_model("Models/chair/chair.3ds");
+	obstacles[chair2].scale *= 0.03;
+
+
+	obstacles[dresser] = Entity(Vector(25, 0.5, 15), Vector(0.5, 0.5, 0.5));
 	obstacles[dresser].load_model("Models/Dresser/Dresser.3ds");
 	obstacles[dresser].scale *= 0.008;
+	obstacles[dresser].rotate({ 0,180,0 });
 
-	obstacles[table] = Entity(Vector(-35, 0, 0), Vector(0.5, 0.5, 0.5));
+	obstacles[dresser1] = Entity(Vector(25, 0.5, -15), Vector(0.5, 0.5, 0.5));
+	obstacles[dresser1].load_model("Models/Dresser/Dresser.3ds");
+	obstacles[dresser1].scale *= 0.008;
+	obstacles[dresser1].rotate({ 0,180,0 });
+
+	obstacles[table] = Entity(Vector(-15, 0, 15), Vector(0.5, 0.5, 0.5));
 	obstacles[table].load_model("Models/table/uploads_files_3892034_1084_table.3ds");
 	obstacles[table].scale *= 0.03;
 
 	obstacles[armChair] = Entity(Vector(5, 0, -25), Vector(0.5, 0.5, 0.5));
 	obstacles[armChair].load_model("Models/Armchair 3/Armchair 3.3ds");
 	obstacles[armChair].scale *= 0.003; 
+	obstacles[table2] = Entity(Vector(-15, 0, -15), Vector(0.5, 0.5, 0.5));
+	obstacles[table2].load_model("Models/table/uploads_files_3892034_1084_table.3ds");
+	obstacles[table2].scale *= 0.03;
+
+	obstacles[armChair] = Entity(Vector(20, 1, -10), Vector(0.5, 0.5, 0.5));
+	obstacles[armChair].load_model("Models/Armchair 3/Armchair3.3ds");
+	obstacles[armChair].scale *= 0.003;
 
 	obstacles[door] = Entity(Vector(55, 0, 0), Vector(0.5, 0.5, 0.5));
-	obstacles[door].load_model("Models/door/door.3ds");
-	obstacles[door].scale *= 0.05;
+	/*obstacles[door].load_model("Models/door/door.3ds");
+	obstacles[door].scale *= 0.05;*/
 
 	obstacles[wall1] = Entity(Vector(0, 0, -25), Vector(100, 1, 1));
 	obstacles[wall2] = Entity(Vector(0, 0, 25), Vector(100, 1, 1));
@@ -188,8 +206,8 @@ L2::L2()
 	obstacles[wall5] = Entity(Vector(47, 0, 20), Vector(12.5, 1, 12.5));
 
 	collectables[0] = Collectable(Vector(0, 0, 20), Vector(0.1, 1, 0.1), egg);
-	collectables[0].load_model("Models/salt/salt.3ds");
-	collectables[0].scale *= 0.03;
+	/*collectables[0].load_model("Models/salt/salt.3ds");
+	collectables[0].scale *= 0.03;*/
 
 }
 

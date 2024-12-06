@@ -18,9 +18,12 @@ class L2
 		wall5,
 		door,
 		chair,
+		chair2,
 		dresser,
+		dresser1,
 		sneakers,
 		table,
+		table2,
 		armChair,
 
 
