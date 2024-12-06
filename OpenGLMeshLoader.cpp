@@ -16,6 +16,7 @@ constexpr auto DEBOUNCE = 0.1;
 typedef enum {
 	LVL1 = 0,
 	LVL2,
+	END,
 } State;
 
 
@@ -94,7 +95,36 @@ void myDisplay(void)
 	{
 		l2.Display(&p);
 	}
+	else
+	{
+		int i = 0;
+		int len = 0;
+		std::string text;
+		text = std::to_string(elapsedTime);
+		float x, y;
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glMatrixMode(GL_PROJECTION);
+		glPushMatrix();
+		glLoadIdentity();
+		gluOrtho2D(0, 640, 0, 480);
+		glMatrixMode(GL_MODELVIEW);
+		glPushMatrix();
+		glLoadIdentity();
 
+		glColor3f(1.0, 0.0, 0.0);
+		x = (640 - (len * 9)) / 2;
+		y = 240;
+		glRasterPos2i(x, y);
+		while (text[i] != '\0')
+		{
+			glutBitmapCharacter(GLUT_BITMAP_8_BY_13, text[i++]);
+		}
+
+		glPopMatrix();
+		glMatrixMode(GL_PROJECTION);
+		glPopMatrix();
+		glMatrixMode(GL_MODELVIEW);
+	}
 	// Display the timer
 	displayTimer(elapsedTime);
 
@@ -304,7 +334,8 @@ void update(int value)
 	p.update();
 
 	debounce_time += 0.016;
-	elapsedTime += 0.016; // Update the elapsed time
+	if (state != END)
+		elapsedTime += 0.016; // Update the elapsed time
 
 
 	glutPostRedisplay();
@@ -443,3 +474,8 @@ void main(int argc, char** argv)
 
 	glutMainLoop();
 }
+
+
+
+
+	
