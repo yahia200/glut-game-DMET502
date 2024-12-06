@@ -8,25 +8,31 @@ void L2::InitLightSource()
 	// Enable Lighting for this OpenGL Program
 	glEnable(GL_LIGHTING);
 
-	// Enable Light Source number 0
-	// OpengL has 8 light sources
-	glEnable(GL_LIGHT0);
+	// Enable Light Source number 2
+	glEnable(GL_LIGHT2);
 
-	// Define Light source 0 ambient light
-	GLfloat ambient[] = { 0.1f, 0.1f, 0.1, 1.0f };
-	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+	// Define Light source 2 diffuse light (blue)
+	GLfloat l2Diffuse[] = { 0.0f, 0.0f, 1.0f, 1.0f };
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, l2Diffuse);
 
-	// Define Light source 0 diffuse light
-	GLfloat diffuse[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+	// Define Light source 2 ambient light (blue)
+	GLfloat l2Ambient[] = { 0.0f, 0.0f, 1.0f, 1.0f };
+	glLightfv(GL_LIGHT2, GL_AMBIENT, l2Ambient);
 
-	// Define Light source 0 Specular light
-	GLfloat specular[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+	// Define Light source 2 specular light (blue)
+	GLfloat l2Specular[] = { 0.0f, 0.0f, 1.0f, 1.0f };
+	glLightfv(GL_LIGHT2, GL_SPECULAR, l2Specular);
 
-	// Finally, define light source 0 position in World Space
-	GLfloat light_position[] = { 0.0f, 10.0f, 0.0f, 1.0f };
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	// Set initial position of the light source
+	GLfloat l2Position[] = { 0.0f, 2.0f, 0.0f, 1.0f };
+	glLightfv(GL_LIGHT2, GL_POSITION, l2Position);
+
+	// Set the light direction to point downwards
+	GLfloat l2Direction[] = { 0.0f, -1.0f, 0.0f };
+	glLightfv(GL_LIGHT2, GL_SPOT_DIRECTION, l2Direction);
+
+	// Set the spotlight cutoff angle to restrict the light to a cone
+	glLightf(GL_LIGHT2, GL_SPOT_CUTOFF, 45.0f);
 }
 //
 ////=======================================================================
@@ -90,7 +96,7 @@ void L2::myInit(float fovy, float aspectRatio, float zNear, float zFar)
 
 void L2::RenderGround()
 {
-	glDisable(GL_LIGHTING);	// Disable lighting 
+	//glDisable(GL_LIGHTING);	// Disable lighting 
 
 	glColor3f(0.6, 0.6, 0.6);	// Dim the ground texture a bit
 
@@ -112,7 +118,7 @@ void L2::RenderGround()
 	glEnd();
 	glPopMatrix();
 
-	glEnable(GL_LIGHTING);	// Enable lighting again for other entites coming throung the pipeline.
+	//glEnable(GL_LIGHTING);	// Enable lighting again for other entites coming throung the pipeline.
 
 	glColor3f(1, 1, 1);	// Set material back to white instead of grey used for the ground texture.
 }
@@ -121,14 +127,14 @@ void L2::RenderGround()
 void L2::Display(Player* p)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glDisable(GL_LIGHT0);
 
 
-
-	GLfloat lightIntensity[] = { 0.7, 0.7, 0.7, 1.0f };
-	GLfloat lightPosition[] = { 0.0f, 100.0f, 0.0f, 0.0f };
-	glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
-	glLightfv(GL_LIGHT0, GL_AMBIENT, lightIntensity);
-
+	GLfloat lightIntensity[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	GLfloat lightPosition[] = { p->position.x-2, p->position.y + 8, p->position.z, 1.0f};
+	glLightfv(GL_LIGHT2, GL_POSITION, lightPosition);
+	glLightfv(GL_LIGHT2, GL_DIFFUSE, lightIntensity);
+	glLightfv(GL_LIGHT2, GL_AMBIENT, lightIntensity);
 	//// Draw Ground
 	RenderGround();
 	DrawWalls();
