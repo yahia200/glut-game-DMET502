@@ -33,7 +33,7 @@ GLuint tex_wall;
 GLdouble fovy = 45.0;
 GLdouble aspectRatio = (GLdouble)WIDTH / (GLdouble)HEIGHT;
 GLdouble zNear = 0.1;
-GLdouble zFar = 100;
+GLdouble zFar = 300;
 State state = LVL1;
 
 
@@ -108,7 +108,7 @@ void myDisplay(void)
 	glBindTexture(GL_TEXTURE_2D, tex);
 	gluQuadricTexture(qobj, true);
 	gluQuadricNormals(qobj, GL_SMOOTH);
-	gluSphere(qobj, 100, 100, 100);
+	gluSphere(qobj, 200, 100, 100);
 	gluDeleteQuadric(qobj);
 
 
@@ -258,6 +258,23 @@ void mouse(int x, int y)
 	mouse_x = x;
 }
 
+void myMouse2(int button, int state, int x, int y)
+{
+	if (state == GLUT_DOWN) {
+		if (button == GLUT_LEFT_BUTTON) {
+			// Change view
+			if (p.camera.prespective == TP)
+				p.camera.prespective = FP;
+			else
+				p.camera.prespective = TP;
+		}
+		else if (button == GLUT_RIGHT_BUTTON) {
+			// Make the player jump
+			p.jump();
+		}
+	}
+}
+
 
 void update(int value)
 {
@@ -383,6 +400,7 @@ void main(int argc, char** argv)
 
 	last_mouse_x = screenWidth/2;
 
+	
 
 	glutCreateWindow(title);
 
@@ -399,6 +417,8 @@ void main(int argc, char** argv)
 	glutWarpPointer(WIDTH / 2, HEIGHT / 2);
 
 	glutFullScreen();
+
+	glutMouseFunc(myMouse2);
 
 	glutSetCursor(GLUT_CURSOR_NONE);
 

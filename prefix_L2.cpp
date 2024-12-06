@@ -175,10 +175,10 @@ L2::L2()
 
 	obstacles[armChair] = Entity(Vector(5, 0, -25), Vector(0.5, 0.5, 0.5));
 	obstacles[armChair].load_model("Models/Armchair 3/Armchair 3.3ds");
-	obstacles[armChair].scale *= 0.003;
+	obstacles[armChair].scale *= 0.003; 
 
 	obstacles[door] = Entity(Vector(55, 0, 0), Vector(0.5, 0.5, 0.5));
-	//obstacles[door].load_model("Models/door/door.3ds");
+	obstacles[door].load_model("Models/door/door.3ds");
 	obstacles[door].scale *= 0.05;
 
 	obstacles[wall1] = Entity(Vector(0, 0, -25), Vector(100, 1, 1));
@@ -188,7 +188,7 @@ L2::L2()
 	obstacles[wall5] = Entity(Vector(47, 0, 20), Vector(12.5, 1, 12.5));
 
 	collectables[0] = Collectable(Vector(0, 0, 20), Vector(0.1, 1, 0.1), egg);
-	//collectables[0].load_model("Models/salt/salt.3ds");
+	collectables[0].load_model("Models/salt/salt.3ds");
 	collectables[0].scale *= 0.03;
 
 }
