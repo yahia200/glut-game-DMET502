@@ -214,7 +214,7 @@ void Model_3DS::Load(char *name)
 	// Make sure we are at the beginning
 	fseek(bin3ds, 0, SEEK_SET);
 
-	// Load the Main Chunk's header
+	// Load the Main Chunk's header    
 	fread(&main.id,sizeof(main.id),1,bin3ds);
     fread(&main.len,sizeof(main.len),1,bin3ds);
 

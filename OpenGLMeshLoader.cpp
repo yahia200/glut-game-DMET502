@@ -26,6 +26,7 @@ float debounce_time = 0;
 int cameraZoom = 0;
 char title[] = "3D Model Loader Sample";
 GLuint tex;
+GLuint tex_wall;
 GLdouble fovy = 45.0;
 GLdouble aspectRatio = (GLdouble)WIDTH / (GLdouble)HEIGHT;
 GLdouble zNear = 0.1;
@@ -211,12 +212,12 @@ void myReshape(int w, int h)
 	glLoadIdentity();
 }
 
-
 void LoadAssets()
 {
 	p.load_model("Models/player/player.3DS");
 	p.scale *= 5;
 	loadBMP(&tex, "Textures/blu-sky-3.bmp", true);
+	loadBMP(&tex_wall, "Textures/wall.bmp", true);
 }
 
 
