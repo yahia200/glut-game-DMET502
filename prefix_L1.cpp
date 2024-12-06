@@ -172,18 +172,18 @@ L1::L1()
 	obstacles[tree5] = Entity(Vector(78, 0, 22), Vector(1, 1, 1));
 	obstacles[tree5].load_model("Models/tree/Tree1.3ds");
 	
-	obstacles[house] = Entity(Vector(80, 0, 0), Vector(1, 1, 1));
+	obstacles[house] = Entity(Vector(80, 0, 0), Vector(1.5, 1, 5.4));
 	obstacles[house].load_model("Models/house/house.3ds");
 	obstacles[house].rotate({ 90,0,90 });
 	obstacles[house].scale *= 2; 
 
-	obstacles[outdoortable] = Entity(Vector(38, 0, 20), Vector(3, 2, 1.5));
+	obstacles[outdoortable] = Entity(Vector(38, -2, 20), Vector(0.5, 4, 4));
 	obstacles[outdoortable].load_model("Models/outdoorfurn/Outdoor Furniture_02_3ds.3ds");
 	obstacles[outdoortable].scale *= 0.08;
 
 	
 
-	collectables[0] = Collectable(Vector(50, -0.1, 20), Vector(1, 1, 1), egg);
+	collectables[0] = Collectable(Vector(50, -0.1, 20), Vector(0.1, 1, 0.1), egg);
 	collectables[0].load_model("Models/egg/egg.3ds");
 	collectables[0].scale *= 0.1;
 
@@ -191,20 +191,32 @@ L1::L1()
 	collectables[1].load_model("Models/apple/apple.3ds");
 	collectables[1].scale *= 0.6;
 
-	collectables[2] = Collectable(Vector(-10, 0.1, 20), Vector(1, 1, 1), apple);
+	collectables[2] = Collectable(Vector(-10, 0.1, 20), Vector(0.1, 1, 0.1), apple);
 	collectables[2].load_model("Models/apple/apple.3ds");
 	collectables[2].scale *= 0.6;
 
-	collectables[3] = Collectable(Vector(-22, 0.1, 20), Vector(1, 1, 1), egg);
+	collectables[3] = Collectable(Vector(-22, 0.1, 20), Vector(0.00001, 1, 0.00001), egg);
 	collectables[3].load_model("Models/egg/egg.3ds");
 	collectables[3].scale *= 0.1;
 }
+
+void L1::CheckAllCollected() {
+	allCollected = true; // Assume all are collected
+	for (int i = 0; i < num_collectables; i++) {
+		if (!collectables[i].collected) {
+			allCollected = false; // If any collectable is not collected, set to false
+			break;
+		}
+	}
+}
+
 
 void L1::collect(int c, Player *p)
 {
 	collectables[c].collected = true;
 	printf("type: %d\n", collectables[c].type);
 	p->collectables[collectables[c].type]++;
+	CheckAllCollected(); // Update the allCollected flag
 }
 
 L1::~L1()

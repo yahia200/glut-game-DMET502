@@ -34,6 +34,8 @@ public:
 	GLTexture tex_ground;
 	L1();
 	void collect(int c, Player *p);
+	void CheckAllCollected();
+	bool allCollected = false; // Flag to indicate all collectables are collected
 	~L1();
 
 };

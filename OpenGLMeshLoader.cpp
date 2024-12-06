@@ -230,6 +230,11 @@ void update(int value)
 {
 	checkKeys();
 
+	// Detect collision with the house in Level 1
+	if (state == LVL1 && physics.is_colliding(p, l1.obstacles[2]) && l1.allCollected) {
+		state = LVL2;
+	}
+
 
 	if ((mouse_x != last_mouse_x))
 	{
