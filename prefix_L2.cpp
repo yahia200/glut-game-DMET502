@@ -203,6 +203,14 @@ L2::L2()
 	obstacles[wall4] = Entity(Vector(47, 0, -20), Vector(12.5, 1, 12.5));
 	obstacles[wall5] = Entity(Vector(47, 0, 20), Vector(12.5, 1, 12.5));
 
+	obstacles[sneakers] = Entity(Vector(10, 0, -10), Vector(0.5, 0.5, 0.5));
+	obstacles[sneakers].load_model("Models/sneakers/vans.3ds");
+	obstacles[sneakers].scale *= 0.008;
+
+	obstacles[sneakers2] = Entity(Vector(15, 0, 5), Vector(0.5, 0.5, 0.5));
+	obstacles[sneakers2].load_model("Models/sneakers/vans.3ds");
+	obstacles[sneakers2].scale *= 0.008;
+
 	collectables[0] = Collectable(Vector(0, 0, 20), Vector(0.1, 1, 0.1), egg);
 	collectables[0].load_model("Models/salt/salt.3ds");
 	collectables[0].scale *= 0.03;

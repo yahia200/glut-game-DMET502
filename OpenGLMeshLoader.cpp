@@ -37,6 +37,7 @@ GLdouble zNear = 0.1;
 GLdouble zFar = 300;
 State state = LVL1;
 
+float originalSpeed = 0.0f; // Store the player's original speed
 
 
 Player p;
@@ -344,6 +345,9 @@ void update(int value)
 
 }
 
+void restoreSpeed(int value) {
+	p.speed = originalSpeed; // Restore the player's original speed
+}
 
 void move(Vector dir)
 {
@@ -363,6 +367,9 @@ void move(Vector dir)
 			if (physics.is_colliding(p, e))
 			{
 				p.move(-diff *3);
+				originalSpeed = p.speed; // Store the original speed
+				p.speed = 0; // Set the speed to zero
+				glutTimerFunc(1000, restoreSpeed, 0); // Restore the speed after 1 second
 				return;
 			}
 		}
@@ -389,6 +396,9 @@ void move(Vector dir)
 				if (physics.is_colliding(p, e))
 				{
 					p.move(-diff * 3);
+					originalSpeed = p.speed; // Store the original speed
+					p.speed = 0; // Set the speed to zero
+					glutTimerFunc(1000, restoreSpeed, 0); // Restore the speed after 1 second
 					return;
 				}
 			}

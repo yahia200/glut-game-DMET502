@@ -22,6 +22,7 @@ class L2
 		dresser,
 		dresser1,
 		sneakers,
+		sneakers2,
 		table,
 		table2,
 		armChair,
