@@ -318,17 +318,17 @@ void update(int value)
 		state = LVL2;
 	}
 
+	// Detect collision with the door in Level 2
+	if (state == LVL2 && physics.is_colliding(p, l2.obstacles[6]) && l2.allCollected) {
+		p.move(Vector(-p.position.x / p.speed, 0, -p.position.z / p.speed));
+		state = END;
+	}
 
 	if ((mouse_x != last_mouse_x))
 	{
 		//printf("Mouse: %d, last: %d\n", mouse_x, last_mouse_x);
 		p.rotate(Vector(0, (last_mouse_x - mouse_x) * 0.007, 0));
 		glutWarpPointer(WIDTH / 2, HEIGHT / 2);
-	}
-
-	if (p.playerCollided) {
-		p.move(Vector(-50, 0, 0));
-		p.playerCollided = false;
 	}
 
 	p.update();
@@ -362,7 +362,7 @@ void move(Vector dir)
 		if ((!(direction) ^ !(diff)) > 0.0f) {
 			if (physics.is_colliding(p, e))
 			{
-				p.playerCollided = true; // to use it for translating back the player when colliding
+				p.move(-diff *3);
 				return;
 			}
 		}
@@ -375,7 +375,7 @@ void move(Vector dir)
 		{
 			l1.collect(c, &p);
 			p.collectedSoFar++;  // to use it for sccaling the player when he collects the items
-				p.scale *= (1.1);
+				p.scale *= (1.025);
 			
 		}
 	}
@@ -388,6 +388,7 @@ void move(Vector dir)
 			if ((!(direction) ^ !(diff)) > 0.0f) {
 				if (physics.is_colliding(p, e))
 				{
+					p.move(-diff * 3);
 					return;
 				}
 			}
@@ -399,6 +400,7 @@ void move(Vector dir)
 			if (!l2.collectables[c].collected && physics.is_colliding(p, l2.collectables[c]))
 			{
 				l2.collect(c, &p);
+				p.scale *= (1.025);
 			}
 		}
 	}

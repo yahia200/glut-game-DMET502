@@ -41,11 +41,13 @@ public:
 	void RenderGround();
 	void DrawWall(GLTexture& texture, float width, float height);
 	void DrawWalls();
+	void CheckAllCollected();
+	void collect(int c, Player* p);
+	bool allCollected = false; // Flag to indicate all collectables are collected
 	GLTexture tex_ground;
 
 	GLTexture tex_wall;
 	L2();
-	void collect(int c, Player* p);
 	~L2();
 
 };

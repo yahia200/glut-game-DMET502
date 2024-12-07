@@ -184,20 +184,18 @@ L2::L2()
 	obstacles[table].load_model("Models/table/uploads_files_3892034_1084_table.3ds");
 	obstacles[table].scale *= 0.03;
 
-	obstacles[armChair] = Entity(Vector(5, 0, -25), Vector(0.5, 0.5, 0.5));
-	obstacles[armChair].load_model("Models/Armchair 3/Armchair 3.3ds");
-	obstacles[armChair].scale *= 0.003; 
-	obstacles[table2] = Entity(Vector(-15, 0, -15), Vector(0.5, 0.5, 0.5));
-	obstacles[table2].load_model("Models/table/uploads_files_3892034_1084_table.3ds");
-	obstacles[table2].scale *= 0.03;
-
 	obstacles[armChair] = Entity(Vector(20, 1, -10), Vector(0.5, 0.5, 0.5));
 	obstacles[armChair].load_model("Models/Armchair 3/Armchair3.3ds");
 	obstacles[armChair].scale *= 0.003;
 
-	obstacles[door] = Entity(Vector(55, 0, 0), Vector(0.5, 0.5, 0.5));
-	/*obstacles[door].load_model("Models/door/door.3ds");
-	obstacles[door].scale *= 0.05;*/
+	obstacles[table2] = Entity(Vector(-15, 0, -15), Vector(0.5, 0.5, 0.5));
+	obstacles[table2].load_model("Models/table/uploads_files_3892034_1084_table.3ds");
+	obstacles[table2].scale *= 0.03;
+
+
+	obstacles[door] = Entity(Vector(55, 0, 0), Vector(0.5, 0.5, 15));
+	obstacles[door].load_model("Models/door/door.3ds");
+	obstacles[door].scale *= 0.05;
 
 	obstacles[wall1] = Entity(Vector(0, 0, -25), Vector(100, 1, 1));
 	obstacles[wall2] = Entity(Vector(0, 0, 25), Vector(100, 1, 1));
@@ -206,17 +204,11 @@ L2::L2()
 	obstacles[wall5] = Entity(Vector(47, 0, 20), Vector(12.5, 1, 12.5));
 
 	collectables[0] = Collectable(Vector(0, 0, 20), Vector(0.1, 1, 0.1), egg);
-	/*collectables[0].load_model("Models/salt/salt.3ds");
-	collectables[0].scale *= 0.03;*/
+	collectables[0].load_model("Models/salt/salt.3ds");
+	collectables[0].scale *= 0.03;
 
 }
 
-void L2::collect(int c, Player* p)
-{
-	collectables[c].collected = true;
-	printf("type: %d\n", collectables[c].type);
-	p->collectables[collectables[c].type]++;
-}
 void L2::DrawWall(GLTexture& texture, float width, float height)
 {
 	glEnable(GL_TEXTURE_2D);  // Enable 2D Texturing
@@ -299,6 +291,24 @@ void L2::DrawWalls()
 
 	
 }
+void L2::CheckAllCollected() {
+	allCollected = true; // Assume all are collected
+	for (int i = 0; i < num_collectables; i++) {
+		if (!collectables[i].collected) {
+			allCollected = false; // If any collectable is not collected, set to false
+			break;
+		}
+	}
+}
+
+void L2::collect(int c, Player* p)
+{
+	collectables[c].collected = true;
+	printf("type: %d\n", collectables[c].type);
+	p->collectables[collectables[c].type]++;
+	CheckAllCollected(); // Update the allCollected flag
+}
+
 L2::~L2()
 {
 
